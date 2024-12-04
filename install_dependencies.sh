@@ -7,6 +7,7 @@ if ! command -v wine &> /dev/null; then
     echo "Wine isn't install. Installing in progress..."
     sudo apt update
     sudo apt install -y wine wine64 winetricks
+    sudo dpkg --add-architecture i386 && apt-get update && apt-get install wine32:i386
     if ! command -v wine &> /dev/null; then
         echo "Error : The Wine installation have failed."
         exit 1
