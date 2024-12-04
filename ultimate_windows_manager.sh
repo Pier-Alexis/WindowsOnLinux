@@ -9,6 +9,7 @@ function setup_steam_with_proton() {
     if ! command -v steam &> /dev/null; then
         sudo apt update
         sudo apt install -y steam
+        sudo apt install gamemode
     else
         echo "Steam is already install."
     fi
@@ -35,6 +36,7 @@ function setup_fortnite_proton() {
     echo "[1/4] Creation of repository..."
     mkdir -p ~/proton_fortnite/prefix
     export WINEPREFIX=~/proton_fortnite/prefix
+    sudo apt install gamemode
 
     # Installation of DXVK
     echo "[2/4] Downloading and installating DXVK for Fortnite..."
