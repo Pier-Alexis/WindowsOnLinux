@@ -6,7 +6,8 @@ echo "[1/6] Verification and installation of Wine..."
 if ! command -v wine &> /dev/null; then
     echo "Wine isn't install. Installing in progress..."
     sudo apt update
-    sudo apt install -y wine wine64 winetricks
+    sudo apt install --install-recommends wine64
+    sudo apt install --install-recommends winetricks
     sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install wine32:i386
     if ! command -v wine &> /dev/null; then
         echo "Error : The Wine installation have failed."
@@ -27,6 +28,8 @@ winetricks -q vcrun2019 dotnet48 dxvk
 # Complete installation of DirectX
 echo "[4/6] Full installation of DirectX..."
 winetricks -q d3dx9 d3dx10 d3dx11
+winetricks -q dxvk
+winetricks -q vcrun2019 dotnet48
 # Installation des versions récentes de .NET
 echo "[5/6] Installation of recents versions of .NET..."
 latest_dotnet_url="https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime"
