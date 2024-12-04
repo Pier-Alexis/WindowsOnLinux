@@ -14,28 +14,28 @@ if ! command -v wine &> /dev/null; then
 else
     echo "Wine is already installed."
 fi
-# Configuration de Wine
-echo "[2/6] Configuration de Wine..."
+# Configuration of Wine
+echo "[2/6] Configuration of Wine..."
 winecfg <<EOF
 [system]
 os=Windows 10
 EOF
-# Installation des dépendances via winetricks
-echo "[3/6] Installation des bibliothèques et frameworks requis..."
+# Installation of dependencies via winetricks
+echo "[3/6] Installation of requires dependencies..."
 winetricks -q vcrun2019 dotnet48 dxvk
-# Installation de DirectX complet
-echo "[4/6] Installation de DirectX complet..."
+# Complete installation of DirectX
+echo "[4/6] Full installation of DirectX..."
 winetricks -q d3dx9 d3dx10 d3dx11
 # Installation des versions récentes de .NET
-echo "[5/6] Installation des versions récentes de .NET..."
+echo "[5/6] Installation of recents versions of .NET..."
 latest_dotnet_url="https://dotnet.microsoft.com/en-us/download/dotnet/6.0/runtime"
 wget "$latest_dotnet_url" -O dotnet_latest_installer.exe
 wine dotnet_latest_installer.exe /quiet /install
 # Vérification et finalisation
-echo "[6/6] Vérification de l'installation..."
+echo "[6/6] Verification of the installation..."
 if wine --version &> /dev/null; then
-    echo "Wine et les dépendances ont été installés avec succès."
+    echo "Wine and others dependencies have been succesfully installed."
 else
-    echo "Une erreur est survenue pendant l'installation."
+    echo "An error occurred during the installation."
 fi
-echo "Installation des dépendances terminée !"
+echo "Installation of dependencies finished !"
