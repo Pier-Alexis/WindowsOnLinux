@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=WindowsOnLinux
+Comment=Execute Windows application (.exe and .msi)
+Exec=/opt/EnhancedWindowsOnLinux/ultimate_windows_manager.sh %f
+Type=Application
+Terminal=true
+MimeType=application/x-ms-dos-executable;application/x-msi;
+Icon=application-x-executable
+Categories=Utility;Application;
