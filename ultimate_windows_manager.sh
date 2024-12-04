@@ -1,15 +1,51 @@
 #!/bin/bash
-echo "=== Ultimate Enhanced Windows On Linux Manager ==="
+
+echo "=== Ultimate Windows On Linux Manager ==="
+
+# Fonction to configure Fortnite
+function setup_fortnite_proton() {
+    echo "=== Configuration of an minimal Proton environment for Fortnite ==="
+
+    # Creating needed repository
+    echo "[1/4] Creation of repository..."
+    mkdir -p ~/proton_fortnite/prefix
+    export WINEPREFIX=~/proton_fortnite/prefix
+
+    # Installation of DXVK
+    echo "[2/4] Downloading and installating DXVK for Fortnite..."
+    mkdir -p ~/proton_fortnite/dxvk
+    wget https://github.com/doitsujin/dxvk/releases/download/v2.0/dxvk-2.0.tar.gz -O ~/proton_fortnite/dxvk/dxvk.tar.gz
+    tar -xvf ~/proton_fortnite/dxvk/dxvk.tar.gz -C ~/proton_fortnite/dxvk
+
+    # Installation of dependencies via winetricks
+    echo "[3/4] Installation of dependencies via winetricks"
+    winetricks -q vcrun2019 dxvk
+
+    # Creating of a launch script for Fortnite
+    echo "[4/4] Creating of a launch script for Fortnite"
+    cat <<EOF > ~/proton_fortnite/launch_fortnite.sh
+#!/bin/bash
+export WINEPREFIX=~/proton_fortnite/prefix
+export WINEDEBUG=-all
+export DXVK_HUD=1
+
+# Launch Fortnite via Epic Games Launcher
+wine ~/.wine/drive_c/Program\\ Files/Epic\\ Games/Launcher/Portal/Binaries/Win64/EpicGamesLauncher.exe
+
+EOF
+
+    chmod +x ~/proton_fortnite/launch_fortnite.sh
+    echo "=== Configuration terminée ! Utilisez ~/proton_fortnite/launch_fortnite.sh pour lancer Fortnite ==="
+}
 
 function show_menu() {
-    echo "Choisissez une option :"
-    echo "1. Configurer l'environnement complet (masquage, dépendances, anti-triche)"
-    echo "2. Lancer un jeu ou une application Windows"
-    echo "3. Gérer les DLL et dépendances"
-    echo "4. Modifier les configurations avancées (DXVK, Wine, Registre)"
-    echo "5. Configurer l'association MIME pour .exe et .msi"
-    echo "6. Diagnostiquer un jeu ou une application"
-    echo "7. Quitter"
+    echo "Choose an option :"
+    echo "2. Launch a game or a Windows Application"
+    echo "3. Manage DLL and dependencies"
+    echo "4. Modify advanced configuration (DXVK, Wine)"
+    echo "6. Diagnostic an application or a game"
+    echo "1. Setup Fortnite"
+    echo "7. Exit"
 }
 
 function setup_environment() {
@@ -44,11 +80,10 @@ function diagnose_application() {
 
 while true; do
     show_menu
-    read -p "Votre choix : " main_choice
+    read -p "Your choice : " main_choice
     case $main_choice in
-        1) setup_environment ;;
+        1) setup_fortnite_proton ;;
         2) launch_application ;;
-        5) configure_mime ;;
         6) diagnose_application ;;
         7) echo "Fermeture du gestionnaire." ; exit 0 ;;
         *) echo "Option invalide. Veuillez réessayer." ;;
