@@ -1,4 +1,4 @@
-# windowsonlinux
+# Windows On Linux
 Windows on Linux program to run application and games. *Basic App for now*.
 
 Copyright (c) 2024 Senka107
