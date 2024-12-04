@@ -1,17 +1,18 @@
 #!/bin/bash
-echo "=== Installation des dépendances Windows essentielles ==="
-# Vérification et installation de Wine
-echo "[1/6] Vérification et installation de Wine..."
+echo "=== Welcome to the WindowsOnLinux installation ==="
+echo "=== Installing essentials Windows dependencies ==="
+# Verification and installation of Wine
+echo "[1/6] Verification and installation of Wine..."
 if ! command -v wine &> /dev/null; then
-    echo "Wine n'est pas installé. Installation en cours..."
+    echo "Wine isn't install. Installing in progress..."
     sudo apt update
     sudo apt install -y wine wine64 winetricks
     if ! command -v wine &> /dev/null; then
-        echo "Erreur : L'installation de Wine a échoué."
+        echo "Error : The Wine installation have failed."
         exit 1
     fi
 else
-    echo "Wine est déjà installé."
+    echo "Wine is already installed."
 fi
 # Configuration de Wine
 echo "[2/6] Configuration de Wine..."
