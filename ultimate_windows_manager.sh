@@ -11,6 +11,8 @@ if [ ! -f "$LAST_EXE_FILE" ]; then
     sudo chmod 666 "$LAST_EXE_FILE"
 fi
 
+sudo chmod 666 /opt/WindowsOnLinux/last_exe.log
+
 # Function to open a Windows executable (.exe)
 function open_last_exe() {
     local exe_path="$1"
