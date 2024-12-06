@@ -25,6 +25,7 @@ cd /opt/WindowsOnLinux
 echo "Running post-install configuration..."
 cd /opt/WindowsOnLinux
 ./enhanced_mask_environment.sh
+wine /opt/WindowsOnLinux/dotnet_latest_installer.exe
 
 # Finalization
 echo "=== Auto Installation of WindowsOnLinux completed ==="
