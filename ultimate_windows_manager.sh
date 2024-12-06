@@ -50,6 +50,46 @@ else
     open_last_exe "$1"
 fi
 
+# Same logic of the .exe, adapted to .msi using msiexec
+# Path to store the last opened .msi file
+LAST_MSI_FILE="/opt/WindowsOnLinux/last_msi.log"
+
+# Ensure the last .msi file log exists
+if [ ! -f "$LAST_MSI_FILE" ]; then
+    sudo touch "$LAST_MSI_FILE"
+    sudo chmod 666 "$LAST_MSI_FILE"
+fi
+
+# Function to open a Windows installer (.msi)
+function open_last_msi() {
+    local msi_path="$1"
+
+    # If no .msi file is provided, read the last one from the file
+    if [ -z "$msi_path" ]; then
+        if [ -f "$LAST_MSI_FILE" ] && [ -s "$LAST_MSI_FILE" ]; then
+            msi_path=$(cat "$LAST_MSI_FILE")
+            echo "No file specified. Using the last opened file: $msi_path"
+        else
+            echo "Error: No last .msi file found. Please specify a file."
+            return 1
+        fi
+    fi
+
+    # Check if the file exists
+    if [ ! -f "$msi_path" ]; then
+        echo "Error: File '$msi_path' does not exist."
+        return 1
+    fi
+
+    # Run the .msi file with Wine's msiexec
+    echo "Running '$msi_path' with msiexec..."
+    wine msiexec /i "$msi_path"
+
+    # Save the path of the last opened .msi file
+    echo "$msi_path" | sudo tee "$LAST_MSI_FILE" > /dev/null
+    echo "File '$msi_path' has been saved as the last opened file."
+}
+
 
 function setup_steam_with_proton() {
     echo "=== Installation and configuration of Steam with Proton ==="
