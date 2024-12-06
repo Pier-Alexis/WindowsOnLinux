@@ -10,19 +10,23 @@ function setup_steam_with_proton() {
         sudo apt update
         sudo apt install -y steam
         sudo apt install gamemode
+        sudo apt update
+        sudo apt upgrade
     else
-        echo "Steam is already install."
+        echo "Steam is already installed."
+        sudo apt update
+        sudo apt upgrade
     fi
     
     echo "[2/3] Installation of Proton-GE..."
-    mkdir -p ~/.steam/root/compatibilitytools.d
+    mkdir -p /opt/WindowsOnLinux/compatibilitytools.d
     proton_ge_url="https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton7-42/GE-Proton7-42.tar.gz"
     wget "$proton_ge_url" -O ~/proton-ge.tar.gz
-    tar -xzf ~/proton-ge.tar.gz -C ~/.steam/root/compatibilitytools.d
+    tar -xzf ~/proton-ge.tar.gz -C /opt/WindowsOnLinux/compatibilitytools.d
     
     echo "[3/3] Configuration of Steam to use Proton-GE..."
-    mkdir -p ~/.steam/steam/steamapps/compatdata
-    echo "Proton-GE installed ~/.steam/root/compatibilitytools.d"
+    mkdir -p /opt/WindowsOnLinux/steam/steam/steamapps/compatdata
+    echo "Proton-GE installed /opt/WindowsOnLinux/compatibilitytools.d"
 
     echo "=== Installation et configuration de Steam avec Proton terminées ! ==="
     echo "Redémarrez Steam et configurez les jeux pour utiliser Proton-GE dans les propriétés."
@@ -69,13 +73,13 @@ function show_menu() {
     echo "Choose an option :"
     echo "1. Setup Fortnite"
     echo "2. Launch a game or a Windows Application"
-    echo "3. Diagnostic an application or a game"
+    echo "3. Diagnostic an application or a game (exe only)"
     echo "4. Setup Steam with Proton"
     echo "5. Exit"
 }
 
 function launch_application() {
-    read -p "Type the full path of the file starting at your username in /home/ : " file_path
+    read -p "Type the full path of the file starting at / : " file_path
     if [[ "home/$file_path" == *.msi ]]; then
         ./install_msi.sh "$file_path" /i
     elif [[ "$file_path" == *.exe ]]; then
