@@ -2,6 +2,53 @@
 
 echo "=== Ultimate Windows On Linux Manager ==="
 
+# Path to store the last opened .exe file
+LAST_EXE_FILE="/opt/WindowsOnLinux/last_exe.log"
+
+# Ensure the last .exe file log exists
+if [ ! -f "$LAST_EXE_FILE" ]; then
+    sudo touch "$LAST_EXE_FILE"
+    sudo chmod 666 "$LAST_EXE_FILE"
+fi
+
+# Function to open a Windows executable (.exe)
+function open_last_exe() {
+    local exe_path="$1"
+
+    # If no .exe file is provided, read the last one from the file
+    if [ -z "$exe_path" ]; then
+        if [ -f "$LAST_EXE_FILE" ] && [ -s "$LAST_EXE_FILE" ]; then
+            exe_path=$(cat "$LAST_EXE_FILE")
+            echo "No file specified. Using the last opened file: $exe_path"
+        else
+            echo "Error: No last .exe file found. Please specify a file."
+            return 1
+        fi
+    fi
+
+    # Check if the file exists
+    if [ ! -f "$exe_path" ]; then
+        echo "Error: File '$exe_path' does not exist."
+        return 1
+    fi
+
+    # Run the .exe file with Wine
+    echo "Running '$exe_path' with Wine..."
+    wine "$exe_path"
+
+    # Save the path of the last opened .exe file
+    echo "$exe_path" | sudo tee "$LAST_EXE_FILE" > /dev/null
+    echo "File '$exe_path' has been saved as the last opened file."
+}
+
+# Automatically open the last file if no arguments are provided
+if [ "$#" -eq 0 ]; then
+    open_last_exe
+else
+    open_last_exe "$1"
+fi
+
+
 function setup_steam_with_proton() {
     echo "=== Installation and configuration of Steam with Proton ==="
 
