@@ -10,7 +10,7 @@ echo "Setting up permissions..."
 sudo chmod 755 /opt/WindowsOnLinux
 sudo chmod -R 755 /opt/WindowsOnLinux
 echo "Copying zip archive..."
-sudo unzip v1.0.0 -d /opt/WindowsOnLinux
+sudo unzip v1.0.1 -d /opt/WindowsOnLinux
 echo "Installing dependencies..."
 sudo chmod +x /opt/WindowsOnLinux/install_dependencies.sh
 cd /opt/WindowsOnLinux
