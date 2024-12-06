@@ -25,6 +25,7 @@ cd /opt/WindowsOnLinux
 echo "Running post-install configuration..."
 cd /opt/WindowsOnLinux
 ./enhanced_mask_environment.sh
+# dotnet is include in the v1.0.0 release. IF NOT USE PLEASE DELETE THIS LINE
 wine /opt/WindowsOnLinux/dotnet_latest_installer.exe
 
 # Finalization
