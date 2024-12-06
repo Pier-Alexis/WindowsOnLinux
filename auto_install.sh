@@ -1,31 +1,31 @@
 #!/bin/bash
 
-echo "=== Automatic Installation of WindowsOnLinux ==="
-
-# Decompression of ZIP file
-echo "[1/5] Unzipping..."
-unzip v1.0.1 -d ./WindowsOnLinux
-cd ./WindowsOnLinux || exit 1
-
-# Attribute permissions
-echo "[2/5] Configuring permissions..."
-for script in *.sh; do
-    chmod +x "$script"
-done
-
-# Installation of dependencies
-echo "[3/5] Installation of dependencies..."
+echo "=== Starting Auto Installation of WindowsOnLinux ==="
+echo "Unzipping file..."
+sudo apt update
+sudo apt-get install unzip
+echo "Creating directories..."
+sudo mkdir -p /opt/WindowsOnLinux
+echo "Setting up permissions..."
+sudo chmod 755 /opt/WindowsOnLinux
+sudo chmod -R 755 /opt/WindowsOnLinux
+echo "Copying zip archive..."
+sudo unzip v1.0.0 -d /opt/WindowsOnLinux
+echo "Installing dependencies..."
+sudo chmod +x /opt/WindowsOnLinux/install_dependencies.sh
+cd /opt/WindowsOnLinux
 ./install_dependencies.sh
-
-# Mask linux environment
-echo "[4/5] Hiding Linux environment..."
+echo "Configuring MIME for WindowsOnLinux..."
+sudo cp /opt/WindowsOnLinux/WindowsOnLinux.desktop /usr/share/applications/
+sudo update-desktop-database
+sudo update-mime-database /usr/share/mime
+sudo chmod +x /opt/WindowsOnLinux/configure_mime.sh
+cd /opt/WindowsOnLinux
+./configure_mime.sh
+echo "Running post-install configuration..."
+cd /opt/WindowsOnLinux
 ./enhanced_mask_environment.sh
 
-# Configuration of MIME associations
-echo "[5/5] Configuration of MIME associations..."
-./configure_mime.sh
-
-# Finalisation
-echo "Installation Completed ! !"
-echo "You can now use WindowsOnLinux by opening a .exe or .msi file, or launch the WindowsOnLinux Manager to configure :"
-echo "./ultimate_windows_manager.sh"
+# Finalization
+echo "=== Auto Installation of WindowsOnLinux completed ==="
+echo "=== To use WindowsOnLinux please open an exe or msi file ==="
