@@ -9,6 +9,8 @@ if ! command -v wine &> /dev/null; then
     sudo apt install --install-recommends wine64
     sudo apt install --install-recommends winetricks
     sudo apt install zenity
+    sudo apt install wine
+    sudo apt install wget
     sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install wine32:i386
     if ! command -v wine &> /dev/null; then
         echo "Error : The Wine installation have failed."
