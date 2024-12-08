@@ -1,0 +1,13 @@
+To install the application WindowsOnLinux, here's what you got to do :
+1. - Put the file auto_install.sh and [the version].zip in the same directory. [WARNING] : The zip file need to keep the same name as you downloaded it. For any issues in installing it, please tell us on the GitHub of WindowsOnLinux, section "Issues", at github.com/Pier-Alexis/windowsonlinux
+2. - Open a terminal - console - Command prompt, whatever the name
+3. - Go to the directory of the auto_install.sh and [the archive].zip, using these commands :
+    ls (to view what is the directory available and from that command, be able to select the one you want)
+Once selected, type :
+    cd [the_directory_you_want]
+Repeat these actions until you are in the correct one.
+4. - Type `chmod +x auto_install.sh && ./auto_install.sh` (without the ` for sure)
+      And you should be fine !
+Also thanks for using WindowsOnLinux, I'm doing this for free so everytime someone download one of my releases I'm always happier.
+
+Copyright (c) 2024 Senka107
