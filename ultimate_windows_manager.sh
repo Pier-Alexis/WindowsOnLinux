@@ -84,17 +84,51 @@ function setup_steam_with_proton() {
     echo "Proton-GE installed /opt/WindowsOnLinux/compatibilitytools.d"
     echo "=== Installation et configuration de Steam avec Proton terminées ! ==="
     echo "Redémarrez Steam et configurez les jeux pour utiliser Proton-GE dans les propriétés."
+    }
+
+function setup_fortnite_proton() {
+    echo "=== Setting up Proton for Fortnite ==="
+
+    # Step 1: Create directories for Proton environment
+    mkdir -p ~/proton_fortnite/prefix
+    export WINEPREFIX=~/proton_fortnite/prefix
+
+    # Step 2: Install DXVK and dependencies
+    mkdir -p ~/proton_fortnite/dxvk
+    wget https://github.com/doitsujin/dxvk/releases/download/v2.0/dxvk-2.0.tar.gz -O ~/proton_fortnite/dxvk/dxvk.tar.gz
+    tar -xvf ~/proton_fortnite/dxvk/dxvk.tar.gz -C ~/proton_fortnite/dxvk
+
+    winetricks -q vcrun2019 dxvk
+
+    # Step 3: Configure DXVK settings
+    echo "dxgi.maxFrameRate = 60" > ~/proton_fortnite/prefix/dxvk.conf
+    echo "=== Proton for Fortnite setup completed ==="
+}
+
+function install_epic_games_launcher() {
+    echo "=== Installing Epic Games Launcher ==="
+
+    # Download the Epic Games Launcher installer
+    local installer_url="https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+    wget "$installer_url" -O ~/EpicGamesLauncherInstaller.msi
+
+    # Install the launcher with Wine
+    wine msiexec /i ~/EpicGamesLauncherInstaller.msi /quiet
+
+    echo "=== Epic Games Launcher installed successfully ==="
+}
 
 # Function to show the main menu
 function show_graphical_menu() {
     local choice=$(zenity --list \
         --title="Windows On Linux Manager" \
         --column="Action" \
-        "Setup Fortnite" \
         "Install a .exe file" \
         "Install a .msi file" \
         "Diagnose an application" \
+        "Install Epic Games Launcher" \
         "Setup Steam with Proton" \
+        "Setup Fortnite with Proton (EPIC GAMES AND FORTNITE NEED TO BE INSTALLED)" \
         "Exit")
 
     case "$choice" in
@@ -102,6 +136,8 @@ function show_graphical_menu() {
         "Install a .msi file") select_file "msi" ;;
         "Diagnose an application") diagnose_application ;;
         "Setup Steam with Proton") setup_steam_with_proton ;;
+        "Install Epic Games Launcher") install_epic_games_launcher ;;
+        "Setup Fortnite with Proton (EPIC GAMES AND FORTNITE NEED TO BE INSTALLED) ") setup_fortnite_proton ;;
         "Exit") zenity --info --text="Exiting the Manager."; exit 0 ;;
         *) zenity --error --text="Invalid selection." ;;
     esac
