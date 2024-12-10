@@ -11,7 +11,7 @@ echo "Setting up permissions..."
 sudo mkdir -p /opt/WindowsOnLinux
 sudo chmod 755 /opt/WindowsOnLinux
 # Unzip directly into the target directory
-unzip v1.0.3-3.0.zip -d /opt/WindowsOnLinux
+sudo unzip v1.0.3-3.0.zip -d /opt/WindowsOnLinux
 if [ ! -f /opt/WindowsOnLinux/install_dependencies.sh ]; then
     echo "Error: Required files are missing in /opt/WindowsOnLinux. Installation aborted."
     exit 1
