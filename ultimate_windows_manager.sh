@@ -133,6 +133,24 @@ function update_manager() {
     zenity --info --text="WindowsOnLinux has been updated to the latest version."
 }
 
+function display_supported_applications() {
+    local temp_file="/tmp/supported_applications.md"
+
+    # Save the content of the markdown file into a temporary file
+    cat <<EOF > "$temp_file"
+    # Supported Applications
+
+    $(cat /opt/WindowsOnLinux/supported_applications.md)
+EOF
+
+    # Display the content using Zenity
+    zenity --text-info \
+        --title="Supported Applications" \
+        --filename="$temp_file" \
+        --width=800 \
+        --height=600
+}
+
 # Function to show the main menu
 function show_graphical_menu() {
     local choice=$(zenity --list \
@@ -145,6 +163,7 @@ function show_graphical_menu() {
         "Setup Steam with Proton" \
         "Setup Fortnite with Proton (EPIC GAMES AND FORTNITE NEED TO BE INSTALLED)" \
         "Update Windows On Linux" \
+        "Show supported applications" \
         "Exit")
 
     case "$choice" in
@@ -155,6 +174,7 @@ function show_graphical_menu() {
         "Install Epic Games Launcher") install_epic_games_launcher ;;
         "Setup Fortnite with Proton (EPIC GAMES AND FORTNITE NEED TO BE INSTALLED) ") setup_fortnite_proton ;;
         "Update Windows On Linux") update_manager ;;
+        "Show supported applications") display_supported_applications ;;
         "Exit") zenity --info --text="Exiting the Manager."; exit 0 ;;
         *) zenity --error --text="Invalid selection." ;;
     esac
