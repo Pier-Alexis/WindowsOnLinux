@@ -118,6 +118,21 @@ function install_epic_games_launcher() {
     echo "=== Epic Games Launcher installed successfully ==="
 }
 
+function update_manager() {
+    echo "=== Updating WindowsOnLinux ==="
+
+    # Clone or pull the latest version from GitHub
+    local repo_url="https://github.com/Pier-Alexis/WindowsOnLinux"
+    if [ -d "./WindowsOnLinux" ]; then
+        cd WindowsOnLinux
+        git pull
+    else
+        git clone "$repo_url" ./WindowsOnLinux
+    fi
+
+    zenity --info --text="WindowsOnLinux has been updated to the latest version."
+}
+
 # Function to show the main menu
 function show_graphical_menu() {
     local choice=$(zenity --list \
@@ -129,6 +144,7 @@ function show_graphical_menu() {
         "Install Epic Games Launcher" \
         "Setup Steam with Proton" \
         "Setup Fortnite with Proton (EPIC GAMES AND FORTNITE NEED TO BE INSTALLED)" \
+        "Update Windows On Linux" \
         "Exit")
 
     case "$choice" in
@@ -138,6 +154,7 @@ function show_graphical_menu() {
         "Setup Steam with Proton") setup_steam_with_proton ;;
         "Install Epic Games Launcher") install_epic_games_launcher ;;
         "Setup Fortnite with Proton (EPIC GAMES AND FORTNITE NEED TO BE INSTALLED) ") setup_fortnite_proton ;;
+        "Update Windows On Linux") update_manager ;;
         "Exit") zenity --info --text="Exiting the Manager."; exit 0 ;;
         *) zenity --error --text="Invalid selection." ;;
     esac
