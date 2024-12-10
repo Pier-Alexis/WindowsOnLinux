@@ -7,11 +7,20 @@ sudo apt-get install unzip
 echo "Creating directories..."
 sudo mkdir -p /opt/WindowsOnLinux
 echo "Setting up permissions..."
+# Ensure /opt/WindowsOnLinux exists
+sudo mkdir -p /opt/WindowsOnLinux
 sudo chmod 755 /opt/WindowsOnLinux
-sudo chmod -R 755 /opt/WindowsOnLinux
-echo "Copying zip archive..."
-sudo unzip v1.0.3 -d /opt/WindowsOnLinux
-cd /opt/WindowsOnLinux/ && sudo chmod +x uninstall_windowsonlinux.sh && ./uninstall_windowsonlinux.sh
+# Unzip directly into the target directory
+unzip v1.0.3-2.0.zip -d /opt/WindowsOnLinux
+if [ ! -f /opt/WindowsOnLinux/install_dependencies.sh ]; then
+    echo "Error: Required files are missing in /opt/WindowsOnLinux. Installation aborted."
+    exit 1
+fi
+if [! -f /opt/WindowsOnLinux/configure_mime.sh ]; then
+    echo "Error: Required files are missing ! Path : /opt/WindowsOnLinux. Installation aborted"
+    exit 1
+fi
+
 echo "Installing dependencies..."
 sudo chmod +x /opt/WindowsOnLinux/install_dependencies.sh
 cd /opt/WindowsOnLinux
