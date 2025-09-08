@@ -1,5 +1,5 @@
 # Windows On Linux
-Windows on Linux program to run application and games. *Basic App for now*.
+Windows on Linux program to run application and games. **Please note that this program is made for Ubuntu based distributions.**
 
 Copyright (c) 2024 Senka107
 
